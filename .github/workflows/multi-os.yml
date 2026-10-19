@@ -1,0 +1,46 @@
+
+name: Multi-OS Runners Demo
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  ubuntu-job:
+    name: Ubuntu Runner
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display Linux Information
+        run: |
+          echo "Student: Ibad ur Rehman"
+          echo "SAP ID: 56468"
+          echo "Running on Ubuntu Linux"
+          cat /etc/os-release
+
+  windows-job:
+    name: Windows Runner
+    runs-on: windows-latest
+    steps:
+      - name: PowerShell and Chocolatey
+        shell: pwsh
+        run: |
+          Write-Output "Student: Ibad ur Rehman"
+          Write-Output "Running on Windows"
+          Get-CimInstance Win32_OperatingSystem |
+            Select-Object Caption, Version
+          choco --version
+
+  macos-job:
+    name: macOS Runner
+    runs-on: macos-latest
+    steps:
+      - name: Compile Swift Program
+        run: |
+          echo "Student: Ibad ur Rehman"
+          echo "Running on macOS"
+          sw_vers
+          swiftc --version
+          echo 'print("Hello from Swift on macOS!")' > hello.swift
+          swiftc hello.swift -o hello
+          ./hello
