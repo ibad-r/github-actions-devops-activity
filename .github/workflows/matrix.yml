@@ -1,0 +1,38 @@
+
+name: Matrix Build Demo
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  matrix-build:
+    name: ${{ matrix.os }} - Node ${{ matrix.node }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: [20, 22]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Display Matrix Information
+        shell: bash
+        run: |
+          echo "Student: Ibad ur Rehman"
+          echo "SAP ID: 56468"
+          echo "Operating System: ${{ matrix.os }}"
+          echo "Node.js Version: ${{ matrix.node }}"
+          node --version
+          npm --version
+          echo "Matrix job completed successfully!"
