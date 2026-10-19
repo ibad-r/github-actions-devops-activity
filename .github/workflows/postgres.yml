@@ -1,0 +1,61 @@
+
+name: PostgreSQL Service Container Demo
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  postgres-demo:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+          POSTGRES_DB: devopsdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U testuser -d devopsdb"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Display Student Information
+        run: |
+          echo "Student: Ibad ur Rehman"
+          echo "SAP ID: 56468"
+          echo "PostgreSQL Service Container Demo"
+
+      - name: Install PostgreSQL Client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Test PostgreSQL Connection
+        env:
+          PGPASSWORD: testpass
+        run: |
+          psql -h localhost -U testuser -d devopsdb \
+            -c "SELECT version();"
+
+      - name: Execute SQL Query
+        env:
+          PGPASSWORD: testpass
+        run: |
+          psql -h localhost -U testuser -d devopsdb \
+            -c "CREATE TABLE students (id INT, name VARCHAR(100));"
+
+          psql -h localhost -U testuser -d devopsdb \
+            -c "INSERT INTO students VALUES (56468, 'Ibad ur Rehman');"
+
+          psql -h localhost -U testuser -d devopsdb \
+            -c "SELECT * FROM students;"
+
+      - name: Complete Activity
+        run: echo "PostgreSQL integration test completed!"
