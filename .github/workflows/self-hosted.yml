@@ -1,0 +1,32 @@
+
+name: Self-Hosted Runner Demo
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  self-hosted-job:
+    name: Windows Self-Hosted Runner
+    runs-on: [self-hosted, Windows, X64]
+
+    steps:
+      - name: Display Runner Information
+        shell: powershell
+        run: |
+          Write-Output "Self-Hosted Runner Working!"
+          Write-Output "Student: Ibad ur Rehman"
+          Write-Output "SAP ID: 56468"
+          Write-Output "Runner Name: $env:RUNNER_NAME"
+          Write-Output "Runner OS: $env:RUNNER_OS"
+          Write-Output "Computer Name: $env:COMPUTERNAME"
+          Write-Output "Windows Version:"
+          Get-CimInstance Win32_OperatingSystem |
+            Select-Object Caption, Version
+
+      - name: Workflow Completed
+        shell: powershell
+        run: |
+          Write-Output "Self-hosted job completed successfully!"
