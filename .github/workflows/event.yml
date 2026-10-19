@@ -1,0 +1,28 @@
+
+name: Push and Pull Request Events
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  event-demo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Display Event Information
+        run: |
+          echo "GitHub Actions Event Demo"
+          echo "Student: Ibad ur Rehman"
+          echo "SAP ID: 56468"
+          echo "Event: ${{ github.event_name }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Triggered by: ${{ github.actor }}"
