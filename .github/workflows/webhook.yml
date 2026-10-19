@@ -1,0 +1,23 @@
+
+name: External Webhook Workflow
+
+on:
+  repository_dispatch:
+    types: [custom-webhook]
+
+jobs:
+  webhook-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Display Webhook Information
+        run: |
+          echo "External Webhook Triggered!"
+          echo "Student: Ibad ur Rehman"
+          echo "SAP ID: 56468"
+          echo "Event: ${{ github.event_name }}"
+          echo "Action: ${{ github.event.action }}"
+          echo "Triggered by: ${{ github.actor }}"
+
+      - name: Webhook Success
+        run: echo "Repository Dispatch Completed Successfully!"
