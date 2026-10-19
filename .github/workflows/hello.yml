@@ -1,0 +1,21 @@
+
+name: Hello GitHub Actions
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print Greeting
+        run: echo "Hello from Ibad's GitHub Actions workflow!"
+
+      - name: Show Runner Information
+        run: |
+          echo "My first DevOps workflow"
+          echo "Running on Ubuntu"
+          echo "Workflow completed successfully!"
