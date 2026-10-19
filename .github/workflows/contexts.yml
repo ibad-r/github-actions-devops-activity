@@ -1,0 +1,46 @@
+
+name: Contexts and Conditionals
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  STUDENT_NAME: "Ibad ur Rehman"
+  SAP_ID: "56468"
+
+jobs:
+  context-demo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Display Context Information
+        env:
+          ACTOR: ${{ github.actor }}
+          EVENT: ${{ github.event_name }}
+          OS_NAME: ${{ runner.os }}
+          APP_NAME: ${{ vars.APP_NAME || 'Not configured yet' }}
+        run: |
+          echo "Student: $STUDENT_NAME"
+          echo "SAP ID: $SAP_ID"
+          echo "GitHub Actor: $ACTOR"
+          echo "Event Name: $EVENT"
+          echo "Runner OS: $OS_NAME"
+          echo "Repository Variable: $APP_NAME"
+
+      - name: Check Push Event
+        if: ${{ contains(github.event_name, 'push') }}
+        run: echo "This workflow was triggered by a push."
+
+      - name: Success Condition
+        if: ${{ success() }}
+        run: echo "Previous steps completed successfully."
+
+      - name: Failure Condition
+        if: ${{ failure() }}
+        run: echo "A previous step failed."
+
+      - name: Always Execute
+        if: ${{ always() }}
+        run: echo "This step runs even if an earlier step fails."
