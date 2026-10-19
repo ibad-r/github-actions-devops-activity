@@ -1,0 +1,29 @@
+
+name: Manual Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Enter your name'
+        required: true
+        default: 'Ibad ur Rehman'
+      greeting:
+        description: 'Enter greeting'
+        required: true
+        default: 'Hello'
+      data:
+        description: 'Enter data'
+        required: false
+        default: 'DevOps Activity'
+
+jobs:
+  manual-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display Inputs
+        run: |
+          echo "Name: ${{ inputs.name }}"
+          echo "Greeting: ${{ inputs.greeting }}"
+          echo "Data: ${{ inputs.data }}"
+          echo "Manual workflow executed successfully!"
