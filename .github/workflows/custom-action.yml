@@ -1,0 +1,32 @@
+
+name: Custom JavaScript Action Demo
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  custom-action-demo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run My Custom Action
+        id: greet
+        uses: ibad-r/hello-action@v1.0.0
+        with:
+          who-to-greet: 'Ibad ur Rehman'
+          greeting: 'Hello'
+
+      - name: Display Action Output
+        env:
+          MESSAGE: ${{ steps.greet.outputs.message }}
+        run: |
+          echo "Custom Action Output: $MESSAGE"
+          echo "Student: Ibad ur Rehman"
+          echo "SAP ID: 56468"
+          echo "Custom Action executed successfully!"
